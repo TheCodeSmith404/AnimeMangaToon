@@ -22,10 +22,10 @@ interface ArticleDao {
     suspend fun deleteArticle(article: Article)
 
     @Query("SELECT * FROM article_table WHERE id = :id")
-    suspend fun getArticleById(id: Int): Article?
+    suspend fun getArticleById(id: Int): Article
 
     @Query("SELECT * FROM article_table")
-    suspend fun getAllArticles(): List<Article>
+    fun getAllArticles(): LiveData<List<Article>>
 
     @Query("SELECT * FROM article_table WHERE isFav=1")
     fun getAllFavArticles():LiveData<MutableList<Article>>

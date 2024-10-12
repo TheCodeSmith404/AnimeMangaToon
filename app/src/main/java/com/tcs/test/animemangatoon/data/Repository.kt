@@ -29,16 +29,14 @@ class Repository @Inject constructor(
         }
     }
 
-    suspend fun getArticleById(id: Int): Article? {
+    suspend fun getArticleById(id: Int): Article {
         return withContext(Dispatchers.IO) {
             articleDao.getArticleById(id)
         }
     }
 
-    suspend fun getAllArticles(): List<Article> {
-        return withContext(Dispatchers.IO) {
-            articleDao.getAllArticles()
-        }
+    fun getAllArticles(): LiveData<List<Article>> {
+        return articleDao.getAllArticles()
     }
     fun getAllFavArticles(): LiveData<MutableList<Article>>{
         return articleDao.getAllFavArticles()

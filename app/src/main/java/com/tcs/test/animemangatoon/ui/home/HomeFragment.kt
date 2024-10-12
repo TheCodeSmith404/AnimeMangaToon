@@ -45,7 +45,10 @@ class HomeFragment : Fragment() {
         adapter= HomeRecycleViewAdapter(
             object:OnArticleItemClickListener{
                 override fun onAnswerClicked(article: Article) {
-                    findNavController().navigate(R.id.navigation_details)
+                    val bundle = Bundle().apply {
+                        putInt("id", article.id)
+                    }
+                    findNavController().navigate(R.id.navigation_details,bundle)
                 }
                 override fun onImageButtonClicked(article:Article,position:Int) {
                     viewModel.setFavorite(article)
@@ -53,9 +56,10 @@ class HomeFragment : Fragment() {
                 }
             })
         lifecycleScope.launch {
-            val articles=viewModel.getAllArticles()
-            adapter.setArticles(articles)
-            binding.homeFragmentRv.adapter=adapter
+            viewModel.getAllArticles().observe(viewLifecycleOwner){items->
+                adapter.setArticles(items)
+                binding.homeFragmentRv.adapter=adapter
+            }
         }
     }
 

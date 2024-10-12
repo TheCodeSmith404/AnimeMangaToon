@@ -17,7 +17,7 @@ class FavoritesAdapter(private val onClick:(Article,Int)->Unit):  RecyclerView.A
         fun bind(article: Article,position: Int) {
             binding.titleTv.text = article.name
             Glide.with(binding.imageView2.context)
-                .load(AppCompatResources.getDrawable(binding.imageView2.context,drawableMap[article.img]?: R.drawable.solo_leveling_large))
+                .load(AppCompatResources.getDrawable(binding.imageView2.context,drawableMap[article.imgSmall]?: R.drawable.solo_leveling_small))
                 .into(binding.imageView2)
             binding.imageButton.isSelected=true
             binding.imageButton.setOnClickListener {
@@ -45,6 +45,11 @@ class FavoritesAdapter(private val onClick:(Article,Int)->Unit):  RecyclerView.A
         this.articles=articles
         notifyDataSetChanged()
     }
-    private val drawableMap= mapOf("solo_leveling.jpg" to R.drawable.solo_leveling_large)
+    private val drawableMap= mapOf(
+        "solo_leveling_small.jpg" to R.drawable.solo_leveling_small,
+        "tower_small.jpg" to R.drawable.tower_small,
+        "estate_small.jpg" to R.drawable.estate_small,
+        "returner_small.jpg" to R.drawable.returners_small,
+        "god_small.jpg" to R.drawable.god_small)
 
 }

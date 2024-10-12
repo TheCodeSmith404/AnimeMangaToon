@@ -53,5 +53,10 @@ class HomeRecycleViewAdapter(private val clickListener:OnArticleItemClickListene
     override fun getItemCount(): Int {
         return articles.size
     }
-    private val drawableMap= mapOf("solo_leveling.jpg" to R.drawable.solo_leveling_large)
+    private val drawableMap= mapOf(
+        "solo_leveling_large.jpg" to R.drawable.solo_leveling_large,
+        "tower_large.jpg" to R.drawable.tower_large,
+        "estate_large.jpg" to R.drawable.estate_large,
+        "returner_large.jpg" to R.drawable.returners_large,
+        "god_large.jpg" to R.drawable.god_large)
 }

@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
-    suspend fun getAllArticles():List<Article>{
+    fun getAllArticles():LiveData<List<Article>>{
         return repository.getAllArticles()
     }
     fun setFavorite(article:Article){
