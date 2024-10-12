@@ -57,6 +57,12 @@ class DetailsFragment : Fragment() {
             binding.imageButtonDetails.isSelected=article.isFav
         }
         binding.rating.text=article.rating.toString()
+        binding.ratingBar.rating=article.rating.toFloat()
+        binding.ratingBar.setOnRatingBarChangeListener{_,rating,_->
+            article.rating=rating.toInt()
+            viewModel.setRating(article)
+            binding.rating.text=article.rating.toString()
+        }
     }
     private val drawableMap= mapOf(
         "solo_leveling_small.jpg" to R.drawable.solo_leveling_small,

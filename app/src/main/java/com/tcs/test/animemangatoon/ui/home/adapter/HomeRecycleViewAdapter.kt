@@ -12,7 +12,10 @@ import com.tcs.test.animemangatoon.ui.home.OnArticleItemClickListener
 
 
 class HomeRecycleViewAdapter(private val clickListener:OnArticleItemClickListener) : RecyclerView.Adapter<HomeRecycleViewAdapter.ArticleViewHolder>() {
-    private var articles: List<Article> = emptyList()
+    private var articles: MutableList<Article> = mutableListOf()
+    init {
+        setHasStableIds(true)
+    }
 
     inner class ArticleViewHolder(private val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(article: Article,position: Int) {
@@ -33,6 +36,11 @@ class HomeRecycleViewAdapter(private val clickListener:OnArticleItemClickListene
                 clickListener.onAnswerClicked(article)
             }
         }
+        fun updateFavoriteIcon(isFav: Boolean) {
+            binding.favButton.isSelected = isFav
+            val iconRes = if (isFav) R.drawable.ic_star_24 else R.drawable.ic_star_outline_24
+            binding.favButton.setImageResource(iconRes)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
@@ -40,14 +48,29 @@ class HomeRecycleViewAdapter(private val clickListener:OnArticleItemClickListene
         return ArticleViewHolder(binding)
     }
 
+    override fun onBindViewHolder(holder: ArticleViewHolder, position: Int, payloads: MutableList<Any>) {
+        if (payloads.isEmpty()) {
+            // Full binding if no payload is provided
+            holder.bind(articles[position], position)
+        } else {
+            // Partial update for favorite status
+            val article = articles[position]
+            holder.updateFavoriteIcon(article.isFav)
+        }
+    }
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
-        val article = articles[position]
-        holder.bind(article,position)
+        onBindViewHolder(holder, position, mutableListOf())
     }
 
-    fun setArticles(articles: List<Article>){
+    override fun getItemId(position: Int): Long = articles[position].id.toLong() // Ensure Article has a unique ID
+    override fun setHasStableIds(hasStableIds: Boolean) = super.setHasStableIds(true)
+    fun setArticles(articles: MutableList<Article>){
         this.articles=articles
         notifyDataSetChanged()
+    }
+    fun updateArticle(article: Article, position: Int) {
+        articles[position] = article
+        notifyItemChanged(position, "favorite_updated")
     }
 
     override fun getItemCount(): Int {

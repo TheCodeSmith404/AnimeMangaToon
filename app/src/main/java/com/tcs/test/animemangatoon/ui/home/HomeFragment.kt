@@ -1,6 +1,8 @@
 package com.tcs.test.animemangatoon.ui.home
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,7 +54,11 @@ class HomeFragment : Fragment() {
                 }
                 override fun onImageButtonClicked(article:Article,position:Int) {
                     viewModel.setFavorite(article)
-                    adapter.notifyItemChanged(position)
+                    adapter.updateArticle(article,position)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        binding.homeFragmentRv.scrollToPosition(position)
+                    },100)
+
                 }
             })
         lifecycleScope.launch {

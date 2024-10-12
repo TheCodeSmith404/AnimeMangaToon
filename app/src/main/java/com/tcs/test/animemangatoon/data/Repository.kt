@@ -35,7 +35,7 @@ class Repository @Inject constructor(
         }
     }
 
-    fun getAllArticles(): LiveData<List<Article>> {
+    fun getAllArticles(): LiveData<MutableList<Article>> {
         return articleDao.getAllArticles()
     }
     fun getAllFavArticles(): LiveData<MutableList<Article>>{

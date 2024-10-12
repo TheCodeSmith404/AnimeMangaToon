@@ -25,7 +25,7 @@ interface ArticleDao {
     suspend fun getArticleById(id: Int): Article
 
     @Query("SELECT * FROM article_table")
-    fun getAllArticles(): LiveData<List<Article>>
+    fun getAllArticles(): LiveData<MutableList<Article>>
 
     @Query("SELECT * FROM article_table WHERE isFav=1")
     fun getAllFavArticles():LiveData<MutableList<Article>>
